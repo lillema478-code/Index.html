@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everest School - Bank Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+        }
+
+        /* Header with School Name */
+        .school-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .school-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .school-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #1e3c72 !important;
+        }
+
+        .navbar-brand i {
+            color: #2a5298;
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #333 !important;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #1e3c72 !important;
+            transform: translateY(-2px);
+        }
+
+        /* Assignment Info Card */
+        .assignment-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #1e3c72;
+        }
+
+        .assignment-card h3 {
+            color: #1e3c72;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .assignment-card .student-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: none;
+            height: 100%;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .card-icon.primary {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #333;
+        }
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .card-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Forms */
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .form-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.4);
+            color: white;
+        }
+
+        /* Tables */
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead th {
+            border-bottom: 2px solid #1e3c72;
+            color: #1e3c72;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: #1e3c72;
+            font-weight: 500;
+        }
+
+        /* Login Modal */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- School Header -->
+    <div class="school-header">
+        <div class="container">
+            <h1><i class="fas fa-school me-3"></i>Everest School</h1>
+            <p>Bank Management System - Student Assignment Project</p>
+        </div>
+    </div>
+
+    <!-- Assignment Info -->
+    <div class="container">
+        <div class="assignment-card animate-fade">
+            <h3><i class="fas fa-graduation-cap me-2"></i>Student Assignment Information</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>School:</strong> Everest School</p>
+                    <p><strong>Subject:</strong> Computer Science / Web Development</p>
+                    <p><strong>Project:</strong> Bank Management System</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Student Name:</strong> ___________________</p>
+                    <p><strong>Grade/Section:</strong> ___________________</p>
+                    <p><strong>Roll Number:</strong> ___________________</p>
+                </div>
+            </div>
+            <div class="student-info">
+                <i class="fas fa-info-circle me-2 text-primary"></i>
+                This is a complete bank management system created for Everest School assignment. 
+                Fill in your details above and submit this project to your teacher.
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-university"></i>
+                Everest Bank
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showSection('home'); return false;">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('customers'); return false;">
+                            <i class="fas fa-users"></i> Customers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('accounts'); return false;">
+                            <i class="fas fa-credit-card"></i> Accounts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('transactions'); return false;">
+                            <i class="fas fa-exchange-alt"></i> Transactions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('reports'); return false;">
+                            <i class="fas fa-chart-bar"></i> Reports
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal (Simple for assignment) -->
+    <div class="modal fade" id="loginModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-lock me-2"></i>Everest Bank - Login
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" value="everest" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" value="student123" required>
+                        </div>
+                        <div class="mb-3 text-muted">
+                            <small>Default: everest / student123</small>
+                        </div>
+                        <button type="submit" class="btn-custom w-100">
+                            <i class="fas fa-sign-in-alt me-2"></i>Login
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container my-4">
+        <!-- Home Section -->
+        <div id="home-section" class="section">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="dashboard-card animate-fade">
+                        <div class="card-icon primary">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-value" id="total-customers">0</div>
+                        <p class="card-label">Total Customers</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="dashboard-card animate-fade" style="animation-delay: 0.1s">
+                        <div class="card-icon success">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="card-value" id="total-accounts">0</div>
+                        <p class="card-label">Total Accounts</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="dashboard-card animate-fade" style="animation-delay: 0.2s">
+                        <div class="card-icon primary">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="card-value" id="total-balance">0 ETB</div>
+                        <p class="card-label">Total Balance</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-container">
+                        <h4 class="form-title">Welcome to Everest Bank Management System</h4>
+                        <p>This system allows you to:</p>
+                        <ul>
+                            <li>Register and manage bank customers</li>
+                            <li>Open different types of bank accounts</li>
+                            <li>Perform transactions (deposit, withdraw, transfer)</li>
+                            <li>View transaction history and reports</li>
+                            <li>Track account balances</li>
+                        </ul>
+                        <p class="text-muted">Use the navigation menu above to access different features.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Section -->
+        <div id="customers-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-container">
+                        <h4 class="form-title">Add New Customer</h4>
+                        <form id="customerForm">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" id="address" rows="2" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-custom w-100">
+                                <i class="fas fa-user-plus me-2"></i>Add Customer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="table-container">
+                        <h4 class="form-title">Customer List</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customersList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accounts Section -->
+        <div id="accounts-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-container">
+                        <h4 class="form-title">Open New Account</h4>
+                        <form id="accountForm">
+                            <div class="mb-3">
+                                <label class="form-label">Select Customer</label>
+                                <select class="form-select" id="customerSelect" required>
+                                    <option value="">Choose customer...</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Account Type</label>
+                                <select class="form-select" id="accountType" required>
+                                    <option value="Savings">Savings Account</option>
+                                    <option value="Current">Current Account</option>
+                                    <option value="Student">Student Account</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Initial Deposit</label>
+                                <input type="number" class="form-control" id="initialDeposit" min="100" required>
+                            </div>
+                            <button type="submit" class="btn-custom w-100">
+                                <i class="fas fa-plus-circle me-2"></i>Open Account
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="table-container">
+                        <h4 class="form-title">Account List</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Account No</th>
+                                        <th>Customer</th>
+                                        <th>Type</th>
+                                        <th>Balance</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="accountsList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Section -->
+        <div id="transactions-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-container">
+                        <h4 class="form-title">New Transaction</h4>
+                        <form id="transactionForm">
+                            <div class="mb-3">
+                                <label class="form-label">Transaction Type</label>
+                                <select class="form-select" id="transactionType" required>
+                                    <option value="deposit">Deposit</option>
+                                    <option value="withdraw">Withdraw</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Account Number</label>
+                                <select class="form-select" id="accountNumber" required></select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Amount</label>
+                                <input type="number" class="form-control" id="amount" min="1" required>
+                            </div>
+                            <button type="submit" class="btn-custom w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Process
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="table-container">
+                        <h4 class="form-title">Transaction History</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Account</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionsList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Section (Simple) -->
+        <div id="reports-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-container">
+                        <h4 class="form-title">Account Summary</h4>
+                        <canvas id="accountChart" style="height: 300px;"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-container">
+                        <h4 class="form-title">Transaction Summary</h4>
+                        <canvas id="transactionChart" style="height: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                <i class="fas fa-copyright me-2"></i>2026 Everest School - Bank Management System | Student Assignment Project
+            </p>
+            <p class="text-muted small">
+                Submitted to: ___________________ | Date: ___________________
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Data Storage
+        let customers = JSON.parse(localStorage.getItem('everest_customers')) || [];
+        let accounts = JSON.parse(localStorage.getItem('everest_accounts')) || [];
+        let transactions = JSON.parse(localStorage.getItem('everest_transactions')) || [];
+
+        // Initialize
+        let loginModal;
+        document.addEventListener('DOMContentLoaded', function() {
+            loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+            updateDashboard();
+            loadSampleData();
+        });
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if(username === 'everest' && password === 'student123') {
+                loginModal.hide();
+                showSection('home');
+            } else {
+                alert('Invalid credentials! Use: everest / student123');
+            }
+        });
+
+        // Load sample data for assignment
+        function loadSampleData() {
+            if(customers.length === 0) {
+                customers = [
+                    { id: 1, name: 'Abebe Kebede', email: 'abebe@email.com', phone: '0911223344', address: 'Addis Ababa' },
+                    { id: 2, name: 'Almaz Tadesse', email: 'almaz@email.com', phone: '0922334455', address: 'Addis Ababa' }
+                ];
+                localStorage.setItem('everest_customers', JSON.stringify(customers));
+            }
+            
+            if(accounts.length === 0) {
+                accounts = [
+                    { id: 'ACC001', customerId: 1, customerName: 'Abebe Kebede', type: 'Savings', balance: 5000, status: 'Active' },
+                    { id: 'ACC002', customerId: 2, customerName: 'Almaz Tadesse', type: 'Student', balance: 3000, status: 'Active' }
+                ];
+                localStorage.setItem('everest_accounts', JSON.stringify(accounts));
+            }
+            
+            updateDashboard();
+        }
+
+        // Show sections
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById(section + '-section').style.display = 'block';
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            event.target.closest('.nav-link').classList.add('active');
+            
+            if(section === 'customers') displayCustomers();
+            if(section === 'accounts') { populateCustomerSelect(); displayAccounts(); }
+            if(section === 'transactions') { populateAccountSelect(); displayTransactions(); }
+            if(section === 'reports') initCharts();
+        }
+
+        // Update dashboard
+        function updateDashboard() {
+            document.getElementById('total-customers').textContent = customers.length;
+            document.getElementById('total-accounts').textContent = accounts.length;
+            const total = accounts.reduce((sum, acc) => sum + acc.balance, 0);
+            document.getElementById('total-balance').textContent = total + ' ETB';
+        }
+
+        // Customer functions
+        document.getElementById('customerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const customer = {
+                id: customers.length + 1,
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value
+            };
+            
+            customers.push(customer);
+            localStorage.setItem('everest_customers', JSON.stringify(customers));
+            displayCustomers();
+            updateDashboard();
+            this.reset();
+            alert('Customer added successfully!');
+        });
+
+        function displayCustomers() {
+            const tbody = document.getElementById('customersList');
+            tbody.innerHTML = '';
+            customers.forEach(c => {
+                tbody.innerHTML += `<tr>
+                    <td>${c.name}</td>
+                    <td>${c.email}</td>
+                    <td>${c.phone}</td>
+                    <td>${c.address}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="alert('Viewing ${c.name}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        // Account functions
+        function populateCustomerSelect() {
+            const select = document.getElementById('customerSelect');
+            select.innerHTML = '<option value="">Choose customer...</option>';
+            customers.forEach(c => {
+                select.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+            });
+        }
+
+        document.getElementById('accountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const customerId = parseInt(document.getElementById('customerSelect').value);
+            const customer = customers.find(c => c.id === customerId);
+            
+            const account = {
+                id: 'ACC' + String(accounts.length + 1).padStart(3, '0'),
+                customerId: customerId,
+                customerName: customer.name,
+                type: document.getElementById('accountType').value,
+                balance: parseFloat(document.getElementById('initialDeposit').value),
+                status: 'Active'
+            };
+            
+            accounts.push(account);
+            localStorage.setItem('everest_accounts', JSON.stringify(accounts));
+            displayAccounts();
+            updateDashboard();
+            this.reset();
+            alert('Account opened successfully!');
+        });
+
+        function displayAccounts() {
+            const tbody = document.getElementById('accountsList');
+            tbody.innerHTML = '';
+            accounts.forEach(a => {
+                tbody.innerHTML += `<tr>
+                    <td>${a.id}</td>
+                    <td>${a.customerName}</td>
+                    <td>${a.type}</td>
+                    <td>${a.balance} ETB</td>
+                    <td><span class="badge bg-success">${a.status}</span></td>
+                </tr>`;
+            });
+        }
+
+        // Transaction functions
+        function populateAccountSelect() {
+            const select = document.getElementById('accountNumber');
+            select.innerHTML = '<option value="">Select account...</option>';
+            accounts.forEach(a => {
+                select.innerHTML += `<option value="${a.id}">${a.id} - ${a.customerName} (${a.balance} ETB)</option>`;
+            });
+        }
+
+        document.getElementById('transactionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const accountId = document.getElementById('accountNumber').value;
+            const type = document.getElementById('transactionType').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            
+            const account = accounts.find(a => a.id === accountId);
+            
+            if(type === 'withdraw' && account.balance < amount) {
+                alert('Insufficient balance!');
+                return;
+            }
+            
+            if(type === 'deposit') {
+                account.balance += amount;
+            } else {
+                account.balance -= amount;
+            }
+            
+            const transaction = {
+                date: new Date().toLocaleString(),
+                type: type,
+                account: accountId,
+                amount: amount,
+                status: 'Completed'
+            };
+            
+            transactions.push(transaction);
+            localStorage.setItem('everest_accounts', JSON.stringify(accounts));
+            localStorage.setItem('everest_transactions', JSON.stringify(transactions));
+            
+            displayTransactions();
+            updateDashboard();
+            this.reset();
+            alert('Transaction completed!');
+        });
+
+        function displayTransactions() {
+            const tbody = document.getElementById('transactionsList');
+            tbody.innerHTML = '';
+            transactions.slice(-5).reverse().forEach(t => {
+                tbody.innerHTML += `<tr>
+                    <td>${t.date}</td>
+                    <td><span class="badge bg-${t.type === 'deposit' ? 'success' : 'warning'}">${t.type}</span></td>
+                    <td>${t.account}</td>
+                    <td>${t.amount} ETB</td>
+                    <td><span class="badge bg-success">${t.status}</span></td>
+                </tr>`;
+            });
+        }
+
+        // Charts
+        function initCharts() {
+            // Account types chart
+            const types = {};
+            accounts.forEach(a => types[a.type] = (types[a.type] || 0) + 1);
+            
+            new Chart(document.getElementById('accountChart'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(types),
+                    datasets: [{
+                        data: Object.values(types),
+                        backgroundColor: ['#1e3c72', '#2a5298', '#667eea']
+                    }]
+                }
+            });
+            
+            // Transaction summary
+            const transTypes = { 'Deposit': 0, 'Withdraw': 0 };
+            transactions.forEach(t => transTypes[t.type === 'deposit' ? 'Deposit' : 'Withdraw']++);
+            
+            new Chart(document.getElementById('transactionChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(transTypes),
+                    datasets: [{
+                        data: Object.values(transTypes),
+                        backgroundColor: ['#28a745', '#dc3545']
+                    }]
+                }
+            });
+        }
+
+        // Print function for assignment submission
+        function printAssignment() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
